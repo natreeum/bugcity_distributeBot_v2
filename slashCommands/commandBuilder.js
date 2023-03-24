@@ -35,6 +35,17 @@ const commandBuilder = new SlashCommandBuilder()
   )
   .addSubcommand((subcommand) =>
     subcommand
+      .setName('삭제')
+      .setDescription('사업체를 삭제합니다.')
+      .addStringOption((option) =>
+        option
+          .setName('사업체이름')
+          .setDescription(`정확한 사업체 이름을 입력하셔야합니다.`)
+          .setRequired(true)
+      )
+  )
+  .addSubcommand((subcommand) =>
+    subcommand
       .setName('직원')
       .setDescription('사업체 직원을 등록/수정합니다.')
       .addStringOption((option) =>
@@ -65,11 +76,49 @@ const commandBuilder = new SlashCommandBuilder()
   )
   .addSubcommand((subcommand) =>
     subcommand
+      .setName('직원조회')
+      .setDescription('직원명단을 조회합니다.')
+      .addStringOption((option) =>
+        option
+          .setName('사업체명')
+          .setDescription(`정확한 사업체명을 입력하셔야합니다.`)
+          .setRequired(true)
+      )
+  )
+  .addSubcommand((subcommand) =>
+    subcommand
       .setName('분배')
-      .setDescription('주급을 분배합니다. ')
+      .setDescription('주급을 분배합니다.(관리자 전용)')
       .addStringOption((option) =>
         option
           .setName('company')
+          .setDescription(`정확한 사업체명을 입력하셔야합니다.`)
+          .setRequired(true)
+      )
+  )
+  .addSubcommand((subcommand) =>
+    subcommand
+      .setName('사업체')
+      .setDescription('본인이 사장으로 있는 사업체 명단을 확인합니다.')
+  )
+  .addSubcommand((subcommand) =>
+    subcommand
+      .setName('비활성화')
+      .setDescription('사업체를 비활성화합니다.(관리자전용)')
+      .addStringOption((option) =>
+        option
+          .setName('사업체명')
+          .setDescription(`정확한 사업체명을 입력하셔야합니다.`)
+          .setRequired(true)
+      )
+  )
+  .addSubcommand((subcommand) =>
+    subcommand
+      .setName('활성화')
+      .setDescription('사업체를 활성화합니다.(관리자전용)')
+      .addStringOption((option) =>
+        option
+          .setName('사업체명')
           .setDescription(`정확한 사업체명을 입력하셔야합니다.`)
           .setRequired(true)
       )
