@@ -11,10 +11,9 @@ datasource db {
 }
 
 model Business {
-  name       String   @id
-  staffs     Users[]
-  distribued DateTime
-  activated  Boolean
+  name      String  @id
+  staffs    Users[]
+  activated Boolean @default(true)
 }
 
 model Users {

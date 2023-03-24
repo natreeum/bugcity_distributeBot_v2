@@ -13,6 +13,12 @@ const commandBuilder = new SlashCommandBuilder()
           .setDescription(`정확한 사업체 이름을 입력하셔야합니다.`)
           .setRequired(true)
       )
+      .addUserOption((option) =>
+        option
+          .setName('사장님')
+          .setDescription('등록을 의뢰하신 사장님을 선택합니다.')
+          .setRequired(true)
+      )
   )
   .addSubcommand((subcommand) =>
     subcommand
@@ -20,15 +26,15 @@ const commandBuilder = new SlashCommandBuilder()
       .setDescription('사업체이름을 수정합니다.')
       .addStringOption((option) =>
         option
-          .setName('사업체명')
+          .setName('사업체이름')
           .setDescription(
-            `기존 사업체 이름을 입력하세요. 정확한 사업체명을 입력하셔야 합니다.`
+            `기존 사업체 이름을 입력하세요. 정확한 사업체이름을 입력하셔야 합니다.`
           )
           .setRequired(true)
       )
       .addStringOption((option) =>
         option
-          .setName('새사업체명')
+          .setName('새사업체이름')
           .setDescription(`새 사업체 이름을 입력하세요.`)
           .setRequired(true)
       )
@@ -50,8 +56,8 @@ const commandBuilder = new SlashCommandBuilder()
       .setDescription('사업체 직원을 등록/수정합니다.')
       .addStringOption((option) =>
         option
-          .setName('사업체명')
-          .setDescription(`정확한 사업체명을 입력하셔야합니다.`)
+          .setName('사업체이름')
+          .setDescription(`정확한 사업체이름을 입력하셔야합니다.`)
           .setRequired(true)
       )
       .addUserOption((option) =>
@@ -80,8 +86,8 @@ const commandBuilder = new SlashCommandBuilder()
       .setDescription('직원명단을 조회합니다.')
       .addStringOption((option) =>
         option
-          .setName('사업체명')
-          .setDescription(`정확한 사업체명을 입력하셔야합니다.`)
+          .setName('사업체이름')
+          .setDescription(`정확한 사업체이름을 입력하셔야합니다.`)
           .setRequired(true)
       )
   )
@@ -92,7 +98,7 @@ const commandBuilder = new SlashCommandBuilder()
       .addStringOption((option) =>
         option
           .setName('company')
-          .setDescription(`정확한 사업체명을 입력하셔야합니다.`)
+          .setDescription(`정확한 사업체이름을 입력하셔야합니다.`)
           .setRequired(true)
       )
   )
@@ -107,8 +113,8 @@ const commandBuilder = new SlashCommandBuilder()
       .setDescription('사업체를 비활성화합니다.(관리자전용)')
       .addStringOption((option) =>
         option
-          .setName('사업체명')
-          .setDescription(`정확한 사업체명을 입력하셔야합니다.`)
+          .setName('사업체이름')
+          .setDescription(`정확한 사업체이름을 입력하셔야합니다.`)
           .setRequired(true)
       )
   )
@@ -118,8 +124,8 @@ const commandBuilder = new SlashCommandBuilder()
       .setDescription('사업체를 활성화합니다.(관리자전용)')
       .addStringOption((option) =>
         option
-          .setName('사업체명')
-          .setDescription(`정확한 사업체명을 입력하셔야합니다.`)
+          .setName('사업체이름')
+          .setDescription(`정확한 사업체이름을 입력하셔야합니다.`)
           .setRequired(true)
       )
   );
