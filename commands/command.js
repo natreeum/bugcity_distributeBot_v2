@@ -2,6 +2,8 @@ const commandBuilder = require(`../slashCommands/commandBuilder`);
 const register = require('../functions/register');
 const update = require('../functions/update');
 const remove = require('../functions/remove');
+const member = require('../functions/member');
+const myBusinesses = require('../functions/myBusinesses');
 module.exports = {
   data: commandBuilder,
   async execute(interaction) {
@@ -17,15 +19,15 @@ module.exports = {
     else if (interaction.options.getSubcommand() === '삭제') {
       await remove(interaction);
     }
-    /*
     // 직원
     else if (interaction.options.getSubcommand() === '직원') {
-      await showMember(interaction);
+      await member(interaction);
     }
     // 사업체
     else if (interaction.options.getSubcommand() === '사업체') {
-      await showMember(interaction);
+      await myBusinesses(interaction);
     }
+    /*
     // 직원조회
     else if (interaction.options.getSubcommand() === '직원조회') {
       await showMember(interaction);
