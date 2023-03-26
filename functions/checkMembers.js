@@ -10,19 +10,19 @@ module.exports = async function checkMembers(interaction) {
   const staffs = mems.filter((e) => e.level === 's');
   let message = `\`${bName}\`의 직원 명단입니다.\n`;
   if (ceos.length != 0) {
-    message += `사장\n`;
+    message += `\n사장\n`;
     for (const i of ceos) {
       message += `<@${i.discordId}>\n`;
     }
   }
   if (executives.length != 0) {
-    message += `임원\n`;
+    message += `\n임원\n`;
     for (const i of executives) {
       message += `<@${i.discordId}>\n`;
     }
   }
   if (staffs.length != 0) {
-    message += `직원\n`;
+    message += `\n직원\n`;
     for (const i of staffs) {
       message += `<@${i.discordId}>\n`;
     }
