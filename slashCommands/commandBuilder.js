@@ -92,15 +92,7 @@ const commandBuilder = new SlashCommandBuilder()
       )
   )
   .addSubcommand((subcommand) =>
-    subcommand
-      .setName('분배')
-      .setDescription('주급을 분배합니다.(관리자 전용)')
-      .addStringOption((option) =>
-        option
-          .setName('company')
-          .setDescription(`정확한 사업체이름을 입력하셔야합니다.`)
-          .setRequired(true)
-      )
+    subcommand.setName('분배').setDescription('주급을 분배합니다.(관리자 전용)')
   )
   .addSubcommand((subcommand) =>
     subcommand

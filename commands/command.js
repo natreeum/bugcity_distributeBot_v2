@@ -5,6 +5,7 @@ const remove = require('../functions/remove');
 const member = require('../functions/member');
 const myBusinesses = require('../functions/myBusinesses');
 const checkMembers = require('../functions/checkMembers');
+const distribute = require('../functions/distribute');
 module.exports = {
   data: commandBuilder,
   async execute(interaction) {
@@ -32,11 +33,9 @@ module.exports = {
     else if (interaction.options.getSubcommand() === '직원조회') {
       await checkMembers(interaction);
     }
-    /*
     // 분배
     else if (interaction.options.getSubcommand() === '분배') {
-      await showMember(interaction);
+      await distribute(interaction);
     }
-    */
   },
 };
