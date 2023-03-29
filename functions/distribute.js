@@ -75,30 +75,24 @@ module.exports = async function distribute(interaction) {
     const v = mems.filter((e) => e.level === 'v');
     if (e.length + s.length >= memberCntDividence) {
       await interaction.followUp(
-        `사업체 명 : **${b.name}**\n${await dist(
-          wageType.type3,
-          mems,
-          paidRes
-        )}`
+        `사업체 명 : **${b.name}**\n사업체 채널 : <#${
+          b.channelId
+        }>\n\n${await dist(wageType.type3, mems, paidRes)}`
       );
     } else if (
       e.length + s.length < memberCntDividence &&
       e.length + s.length != 0
     ) {
       await interaction.followUp(
-        `사업체 명 : **${b.name}**\n${await dist(
-          wageType.type2,
-          mems,
-          paidRes
-        )}`
+        `사업체 명 : **${b.name}**\n사업체 채널 : <#${
+          b.channelId
+        }>\n\n${await dist(wageType.type2, mems, paidRes)}`
       );
     } else {
       await interaction.followUp(
-        `사업체 명 : **${b.name}**\n${await dist(
-          wageType.type1,
-          mems,
-          paidRes
-        )}`
+        `사업체 명 : **${b.name}**\n사업체 채널 : <#${
+          b.channelId
+        }>\n\n${await dist(wageType.type1, mems, paidRes)}`
       );
     }
   }
