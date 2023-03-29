@@ -19,6 +19,12 @@ const commandBuilder = new SlashCommandBuilder()
           .setDescription('등록을 의뢰하신 사장님을 선택합니다.')
           .setRequired(true)
       )
+      .addChannelOption((option) =>
+        option
+          .setName('채널')
+          .setDescription('사업체 채널을 선택해 주세요.')
+          .setRequired(true)
+      )
   )
   .addSubcommand((subcommand) =>
     subcommand

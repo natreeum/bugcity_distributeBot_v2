@@ -4,6 +4,7 @@ const getB = require('../functions/prismaScripts/getBusiness');
 module.exports = async function register(interaction) {
   const bsnsName = interaction.options.getString('사업체이름');
   const ceoId = interaction.options.getUser('사장님').id;
+  const channelId = interaction.options.getChannel('채널').id;
   const bsns = await getB(bsnsName);
   if (bsns)
     return await interaction.reply({
@@ -11,10 +12,10 @@ module.exports = async function register(interaction) {
       ephemeral: true,
     });
 
-  const newB = await createB(bsnsName, ceoId);
+  const newB = await createB(bsnsName, ceoId, channelId);
   if (newB)
     await interaction.reply(
-      `<@${ceoId}> 사장님, 사업체 등록이 완료되었습니다!\n사업체 이름 : \`${newB.newB.name}\``
+      `<@${ceoId}> 사장님, 사업체 등록이 완료되었습니다!\n사업체 이름 : \`${newB.newB.name}\`\n사업체 채널 : <#${newB.newB.channelId}>`
     );
   else await interaction.reply(`사업체 생성에 실패했습니다!`);
 };
