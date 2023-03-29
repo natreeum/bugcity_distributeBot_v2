@@ -7,6 +7,7 @@ const myBusinesses = require('../functions/myBusinesses');
 const checkMembers = require('../functions/checkMembers');
 const distribute = require('../functions/distribute');
 const activate = require('../functions/activate');
+const deactivate = require('../functions/deactivate');
 module.exports = {
   data: commandBuilder,
   async execute(interaction) {
@@ -41,6 +42,10 @@ module.exports = {
     // 활성화
     else if (interaction.options.getSubcommand() === '활성화') {
       await activate(interaction);
+    }
+    // 비활성화
+    else if (interaction.options.getSubcommand() === '비활성화') {
+      await deactivate(interaction);
     }
   },
 };
