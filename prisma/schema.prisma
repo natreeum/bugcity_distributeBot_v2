@@ -14,6 +14,7 @@ model Business {
   name      String  @id
   staffs    Users[]
   activated Boolean @default(true)
+  channelId String
 }
 
 model Users {
