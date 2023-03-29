@@ -1,5 +1,8 @@
-module.exports = wageTypes = {
+module.exports = {
+  // 사장만 있어요
   type1: { c: 80, e: 0, s: 0 },
+  // 임직원 4명 미만
   type2: { c: 100, e: 80, s: 50 },
+  // 임직원 4명 이상
   type3: { c: 130, e: 90, s: 60 },
 };

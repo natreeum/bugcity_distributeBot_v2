@@ -1,8 +1,26 @@
 const getBs = require('../functions/prismaScripts/getAllBs');
 const getMems = require('./prismaScripts/getMems');
 const wageType = require('../utils/wageType');
+const { maxWage, memberCntDividence } = require('../utils/wageVal');
 
-async function dist(type, mems) {
+function paidWageCheck(paidRes, uId, wage) {
+  if (!paidRes[uId]) {
+    paidRes[uId] = wage;
+    return wage;
+  }
+  if (paidRes[uId] + wage > maxWage) {
+    const calced = maxWage - paidRes[uId];
+    let res = 0;
+    if (calced >= 0) res = calced;
+    paidRes[uId] += res;
+    return res;
+  } else {
+    paidRes[uId] += wage;
+    return wage;
+  }
+}
+
+async function dist(type, mems, paidRes) {
   let cMessage = '**사장**\n';
   let eMessage = '**임원**\n';
   let sMessage = '**알바**\n';
@@ -10,16 +28,19 @@ async function dist(type, mems) {
   for (const m of mems) {
     if (m.level !== 'v') {
       if (m.level === 'c') {
-        cMessage += `${type[m.level] * 7} **BTC** : <@${m.discordId}>\n`;
-        // type[m.level] * 7 만큼 m.discordId 에게 입금
+        const wage = paidWageCheck(paidRes, m.discordId, type[m.level] * 7);
+        cMessage += `${wage} **BTC** : <@${m.discordId}>\n`;
+        // wage 만큼 m.discordId 에게 입금
       }
       if (m.level === 'e') {
-        eMessage += `${type[m.level] * 7} **BTC** : <@${m.discordId}>\n`;
-        // type[m.level] * 7 만큼 m.discordId 에게 입금
+        const wage = paidWageCheck(paidRes, m.discordId, type[m.level] * 7);
+        eMessage += `${wage} **BTC** : <@${m.discordId}>\n`;
+        // wage 만큼 m.discordId 에게 입금
       }
       if (m.level === 's') {
-        sMessage += `${type[m.level] * 7} **BTC** : <@${m.discordId}>\n`;
-        // type[m.level] * 7 만큼 m.discordId 에게 입금
+        const wage = paidWageCheck(paidRes, m.discordId, type[m.level] * 7);
+        sMessage += `${wage} **BTC** : <@${m.discordId}>\n`;
+        // wage 만큼 m.discordId 에게 입금
       }
     } else {
       vMessage += `<@${m.discordId}>\n`;
@@ -44,23 +65,41 @@ async function dist(type, mems) {
 module.exports = async function distribute(interaction) {
   const businesses = await getBs();
   const activated = businesses.filter((e) => e.activated);
-  let distRes = '';
+  const paidRes = {};
+  await interaction.reply(`사업체 급여 분배를 시작합니다.`);
   for (const b of activated) {
-    distRes += `사업체 : \`${b.name}\`\n`;
     const mems = await getMems(b.name);
     const c = mems.filter((e) => e.level === 'c');
     const e = mems.filter((e) => e.level === 'e');
     const s = mems.filter((e) => e.level === 's');
     const v = mems.filter((e) => e.level === 'v');
-    if (e.length + s.length >= 4) {
-      distRes += await dist(wageType.type3, mems);
-    } else if (e.length + s.length < 4 && e.length + s.length != 0) {
-      distRes += await dist(wageType.type2, mems);
+    if (e.length + s.length >= memberCntDividence) {
+      await interaction.followUp(
+        `사업체 명 : **${b.name}**\n${await dist(
+          wageType.type3,
+          mems,
+          paidRes
+        )}`
+      );
+    } else if (
+      e.length + s.length < memberCntDividence &&
+      e.length + s.length != 0
+    ) {
+      await interaction.followUp(
+        `사업체 명 : **${b.name}**\n${await dist(
+          wageType.type2,
+          mems,
+          paidRes
+        )}`
+      );
     } else {
-      distRes += await dist(wageType.type1, mems);
+      await interaction.followUp(
+        `사업체 명 : **${b.name}**\n${await dist(
+          wageType.type1,
+          mems,
+          paidRes
+        )}`
+      );
     }
-    distRes += `\n`;
   }
-
-  return interaction.reply(distRes);
 };

@@ -1,6 +1,7 @@
 const getB = require('../functions/prismaScripts/getBusiness');
 const getMs = require('../functions/prismaScripts/getMems');
 const wageTypes = require('../utils/wageType');
+const { memberCntDividence } = require('../utils/wageVal');
 
 module.exports = async function checkMembers(interaction) {
   const bName = interaction.options.getString('사업체이름');
@@ -11,8 +12,9 @@ module.exports = async function checkMembers(interaction) {
   const staffs = mems.filter((e) => e.level === 's');
   let wageType;
   const staffsCount = executives.length + staffs.length;
-  if (staffsCount >= 4) wageType = 'type3';
-  else if (staffsCount < 4 && staffsCount > 0) wageType = 'type2';
+  if (staffsCount >= memberCntDividence) wageType = 'type3';
+  else if (staffsCount < memberCntDividence && staffsCount != 0)
+    wageType = 'type2';
   else wageType = 'type1';
 
   let message = `\`${bName}\`의 직원 명단입니다.\n`;
