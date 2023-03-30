@@ -1,12 +1,14 @@
 const updateChannel = require('../functions/prismaScripts/updateBChannel');
-const { checkPerm, noPerm } = require('../utils/checkPerm');
+const { checkPerm, noPerm, noB } = require('../utils/checkPerm');
 
 module.exports = async function moveChannel(interaction) {
   const newChannelId = interaction.options.getChannel('채널').id;
   const bName = interaction.options.getString('사업체이름');
 
-  if (!(await checkPerm('ceo', interaction.user.id, bName)))
-    return noPerm(interaction);
+  // Permission Check
+  const checkPermRes = await checkPerm('ceo', interaction.user.id, bName);
+  if (!checkPermRes) return noPerm(interaction);
+  if (checkPermRes === 2) return noB(interaction);
 
   const updateRes = await updateChannel(bName, newChannelId);
   if (updateRes)

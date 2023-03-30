@@ -14,6 +14,7 @@ async function checkPerm(type, uId, bName) {
   if (type === 'gbd') return checkAdmin(uId) || checkGBD(uId);
   if (type === 'ceo') {
     const mems = await getMems(bName);
+    if (mems.length === 0) return 2;
     const [filteredMem] = mems.filter((e) => e.discordId === uId);
     if (!filteredMem) return false;
     return checkAdmin(uId) || checkGBD(uId) || filteredMem.level === 'c';
@@ -27,7 +28,15 @@ async function noPerm(i) {
   });
 }
 
+async function noB(i) {
+  return i.reply({
+    content: `해당 사업체가 존재하지 않습니다.`,
+    ephemeral: true,
+  });
+}
+
 module.exports = {
   checkPerm,
   noPerm,
+  noB,
 };

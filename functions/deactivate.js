@@ -3,8 +3,11 @@ const { checkPerm, noPerm } = require('../utils/checkPerm');
 
 module.exports = async function deactivate(interaction) {
   const bName = interaction.options.getString('사업체이름');
-  if (!(await checkPerm('ceo', interaction.user.id, bName)))
-    return noPerm(interaction);
+  // Permission check
+  const checkPermRes = await checkPerm('ceo', interaction.user.id, bName);
+  if (!checkPermRes) return noPerm(interaction);
+  if (checkPermRes === 2) return noB(interaction);
+
   const activateRes = await activateB(bName, 'deactivate');
   if (activateRes)
     return await interaction.reply(`\`${bName}\`사업체가 비활성화되었습니다.`);
