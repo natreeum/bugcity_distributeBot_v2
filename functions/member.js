@@ -2,26 +2,30 @@ const checkMem = require('../functions/prismaScripts/checkMemWithB');
 const regMem = require('../functions/prismaScripts/regMem');
 const delMem = require('../functions/prismaScripts/delMem');
 const updMem = require('../functions/prismaScripts/updateMem');
+const { checkPerm, noPerm } = require('../utils/checkPerm');
 
 module.exports = async function member(interaction) {
-  const business = interaction.options.getString('사업체이름');
+  const bName = interaction.options.getString('사업체이름');
   const staffId = interaction.options.getUser('직원').id;
   const level = interaction.options.getString('직급');
 
+  if (!(await checkPerm('ceo', interaction.user.id, bName)))
+    return noPerm(interaction);
+
   if (level === 'f') {
-    const delRes = await delMem(staffId, business);
+    const delRes = await delMem(staffId, bName);
     if (delRes.count != 0)
       return await interaction.reply(`직원이 정상적으로 해고되었습니다.`);
     else return await interaction.reply(`직원을 해고하는데 실패했습니다.`);
   }
 
   let newStaff;
-  const chkMemRes = await checkMem(staffId, business);
+  const chkMemRes = await checkMem(staffId, bName);
   if (chkMemRes) {
-    await updMem(staffId, business, level);
-    newStaff = await checkMem(staffId, business);
+    await updMem(staffId, bName, level);
+    newStaff = await checkMem(staffId, bName);
   } else {
-    newStaff = await regMem(staffId, business, level);
+    newStaff = await regMem(staffId, bName, level);
   }
   const setLevel = {
     c: '사장',

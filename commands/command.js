@@ -8,6 +8,8 @@ const checkMembers = require('../functions/checkMembers');
 const distribute = require('../functions/distribute');
 const activate = require('../functions/activate');
 const deactivate = require('../functions/deactivate');
+const { checkPerm } = require('../utils/checkPerm');
+
 module.exports = {
   data: commandBuilder,
   async execute(interaction) {

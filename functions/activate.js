@@ -1,6 +1,9 @@
 const activateB = require('../functions/prismaScripts/activateB');
+const { checkPerm, noPerm } = require('../utils/checkPerm');
 
 module.exports = async function activate(interaction) {
+  if (!(await checkPerm('admin', interaction.user.id)))
+    return noPerm(interaction);
   const bName = interaction.options.getString('사업체이름');
   const activateRes = await activateB(bName, 'activate');
   if (activateRes)

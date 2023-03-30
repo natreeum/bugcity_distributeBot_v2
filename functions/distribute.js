@@ -2,6 +2,7 @@ const getBs = require('../functions/prismaScripts/getAllBs');
 const getMems = require('./prismaScripts/getMems');
 const wageType = require('../utils/wageType');
 const { maxWage, memberCntDividence } = require('../utils/wageVal');
+const { checkPerm, noPerm } = require('../utils/checkPerm');
 
 function paidWageCheck(paidRes, uId, wage) {
   if (!paidRes[uId]) {
@@ -63,6 +64,10 @@ async function dist(type, mems, paidRes) {
 }
 
 module.exports = async function distribute(interaction) {
+  // Check Permission
+  if (!(await checkPerm('admin', interaction.user.id)))
+    return noPerm(interaction);
+
   const businesses = await getBs();
   const activated = businesses.filter((e) => e.activated);
   const paidRes = {};

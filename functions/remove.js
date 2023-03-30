@@ -1,8 +1,11 @@
 const delB = require('../functions/prismaScripts/delBusiness');
 const getB = require('../functions/prismaScripts/getBusiness');
+const { checkPerm, noPerm } = require('../utils/checkPerm');
 
 module.exports = async function remove(interaction) {
   const bName = interaction.options.getString('사업체이름');
+  if (!(await checkPerm('ceo', interaction.user.id, bName)))
+    return noPerm(interaction);
   const bsns = await getB(bName);
   if (!bsns)
     return interaction.reply({

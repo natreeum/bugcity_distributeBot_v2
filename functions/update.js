@@ -1,7 +1,10 @@
 const updateB = require('../functions/prismaScripts/updateBusiness');
+const { checkPerm, noPerm } = require('../utils/checkPerm');
 
 module.exports = async function update(interaction) {
   const oldBName = interaction.options.getString('사업체이름');
+  if (!(await checkPerm('ceo', interaction.user.id, oldBName)))
+    return noPerm(interaction);
   const newBName = interaction.options.getString('새사업체이름');
   const updateRes = await updateB(oldBName, newBName);
   if (updateRes)
