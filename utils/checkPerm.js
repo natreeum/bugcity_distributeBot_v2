@@ -14,6 +14,7 @@ async function checkPerm(type, uId, bName) {
   if (type === 'gbd') return checkAdmin(uId) || checkGBD(uId);
   if (type === 'ceo') {
     const mems = await getMems(bName);
+    if (mems.length === 0) return false;
     const [filteredMem] = mems.filter((e) => e.discordId === uId);
     return checkAdmin(uId) || checkGBD(uId) || filteredMem.level === 'c';
   }
