@@ -47,6 +47,23 @@ const commandBuilder = new SlashCommandBuilder()
   )
   .addSubcommand((subcommand) =>
     subcommand
+      .setName('이사')
+      .setDescription('사업체 채널을 변경합니다.')
+      .addStringOption((option) =>
+        option
+          .setName('사업체이름')
+          .setDescription('사업체 이름을 정확하게 입력해주세요.')
+          .setRequired(true)
+      )
+      .addChannelOption((option) =>
+        option
+          .setName('채널')
+          .setDescription('사업체 채널을 선택해 주세요.')
+          .setRequired(true)
+      )
+  )
+  .addSubcommand((subcommand) =>
+    subcommand
       .setName('삭제')
       .setDescription('사업체를 삭제합니다.')
       .addStringOption((option) =>

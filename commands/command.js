@@ -8,6 +8,7 @@ const checkMembers = require('../functions/checkMembers');
 const distribute = require('../functions/distribute');
 const activate = require('../functions/activate');
 const deactivate = require('../functions/deactivate');
+const moveChannel = require('../functions/moveChannel');
 const { checkPerm } = require('../utils/checkPerm');
 
 module.exports = {
@@ -20,6 +21,10 @@ module.exports = {
     // 수정
     else if (interaction.options.getSubcommand() === '수정') {
       await update(interaction);
+    }
+    // 이사
+    else if (interaction.options.getSubcommand() === '이사') {
+      await moveChannel(interaction);
     }
     // 삭제
     else if (interaction.options.getSubcommand() === '삭제') {

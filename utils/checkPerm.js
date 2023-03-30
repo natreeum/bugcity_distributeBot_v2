@@ -1,6 +1,6 @@
 const getMems = require('../functions/prismaScripts/getMems');
 
-const ADMIN = [];
+const ADMIN = ['251349298300715008'];
 const GBD_STAFF = [];
 function checkAdmin(uId) {
   return ADMIN.includes(uId);
@@ -14,8 +14,8 @@ async function checkPerm(type, uId, bName) {
   if (type === 'gbd') return checkAdmin(uId) || checkGBD(uId);
   if (type === 'ceo') {
     const mems = await getMems(bName);
-    if (mems.length === 0) return false;
     const [filteredMem] = mems.filter((e) => e.discordId === uId);
+    if (!filteredMem) return false;
     return checkAdmin(uId) || checkGBD(uId) || filteredMem.level === 'c';
   }
 }
