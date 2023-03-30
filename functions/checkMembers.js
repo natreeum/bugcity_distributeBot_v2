@@ -6,6 +6,11 @@ const { memberCntDividence } = require('../utils/wageVal');
 module.exports = async function checkMembers(interaction) {
   const bName = interaction.options.getString('사업체이름');
   const business = await getB(bName);
+  if (!business)
+    return interaction.reply({
+      content: `해당 사업체가 존재하지 않습니다.`,
+      ephemeral: true,
+    });
   const mems = await getMs(bName);
   const ceos = mems.filter((e) => e.level === 'c');
   const executives = mems.filter((e) => e.level === 'e');
