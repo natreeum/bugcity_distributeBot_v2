@@ -1,7 +1,6 @@
 const getMems = require('../functions/prismaScripts/getMems');
+const { ADMIN, GBD_STAFF } = require('./wageVal');
 
-const ADMIN = ['251349298300715008'];
-const GBD_STAFF = [];
 function checkAdmin(uId) {
   return ADMIN.includes(uId);
 }
