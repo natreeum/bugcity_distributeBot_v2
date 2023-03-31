@@ -143,6 +143,11 @@ const commandBuilder = new SlashCommandBuilder()
           .setDescription(`정확한 사업체이름을 입력하셔야합니다.`)
           .setRequired(true)
       )
+  )
+  .addSubcommand((subcommand) =>
+    subcommand
+      .setName('전체보기')
+      .setDescription(`전체 사업체 명단을 급여와함께 확인합니다.`)
   );
 
 module.exports = commandBuilder;

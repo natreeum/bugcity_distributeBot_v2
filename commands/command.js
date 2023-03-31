@@ -10,6 +10,7 @@ const activate = require('../functions/activate');
 const deactivate = require('../functions/deactivate');
 const moveChannel = require('../functions/moveChannel');
 const { checkPerm } = require('../utils/checkPerm');
+const showAllB = require('../functions/showAllB');
 
 module.exports = {
   data: commandBuilder,
@@ -53,6 +54,10 @@ module.exports = {
     // 비활성화
     else if (interaction.options.getSubcommand() === '비활성화') {
       await deactivate(interaction);
+    }
+    // 전체보기
+    else if (interaction.options.getSubcommand() === '전체보기') {
+      await showAllB(interaction);
     }
   },
 };
