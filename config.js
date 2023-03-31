@@ -10,5 +10,4 @@ module.exports = {
   api_v2: process.env.API_ROOT,
   storage: process.env.STORAGE,
   webhookLogsUrl: process.env.WEBHOOK_LOGS,
-  webhook2: process.env.WEBHOOK_SEC,
 };
