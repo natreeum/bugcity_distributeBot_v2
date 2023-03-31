@@ -59,10 +59,11 @@ function addMessage(msgArray, content) {
 }
 
 module.exports = async function showAllB(interaction) {
-  await interaction.reply(`사업체 옆 숫자는 (사장/임원/직원/휴무) 입니다.`);
   // Check Permission
   if (!(await checkPerm('gbd', interaction.user.id)))
     return noPerm(interaction);
+
+  await interaction.reply(`사업체 옆 숫자는 (사장/임원/직원/휴무) 입니다.`);
 
   const businesses = await getBs();
   const activated = businesses.filter((e) => e.activated);
