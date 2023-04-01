@@ -1,8 +1,10 @@
 const fs = require('node:fs');
 const path = require('node:path');
+const cron = require('node-cron');
 
 const { Client, Collection, GatewayIntentBits } = require('discord.js');
 const { token } = require('./config');
+const everyMon = require('./functions/cron/everyMon');
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
@@ -40,6 +42,10 @@ client.on('interactionCreate', async (interaction) => {
       ephemeral: true,
     });
   }
+});
+
+cron.schedule('* * * * 0', () => {
+  everyMon(client);
 });
 
 client.login(token);
