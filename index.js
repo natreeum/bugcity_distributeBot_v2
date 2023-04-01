@@ -44,7 +44,7 @@ client.on('interactionCreate', async (interaction) => {
   }
 });
 
-cron.schedule('* * * * 0', () => {
+cron.schedule('0 0 * * 1', () => {
   everyMon(client);
 });
 
