@@ -9,10 +9,21 @@ async function checkGBDExist() {
   if (GBD.length === 0) return false;
   else return GBD;
 }
+
 async function checkGBD(uId) {
   let check = await checkGBDExist();
   if (!check) check = GBD_STAFF.includes(uId);
-  return GBD_STAFF.includes(uId);
+  else {
+    const [findStaff] = check.filter((e) => e.discordId === uId);
+    if (
+      findStaff.level === 'c' ||
+      findStaff.level === 'e' ||
+      findStaff.level === 's'
+    )
+      check = true;
+    else check = false;
+  }
+  return check;
 }
 
 async function checkPerm(type, uId, bName) {
