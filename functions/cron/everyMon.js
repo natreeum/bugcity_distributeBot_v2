@@ -40,12 +40,12 @@ function dist(type, mems, paidRes) {
       if (m.level === 'e') {
         const wage = paidWageCheck(paidRes, m.discordId, type[m.level] * 7);
         total_wage += wage;
-        cCnt++;
+        eCnt++;
       }
       if (m.level === 's') {
         const wage = paidWageCheck(paidRes, m.discordId, type[m.level] * 7);
         total_wage += wage;
-        cCnt++;
+        sCnt++;
       }
     } else {
       vCnt++;
