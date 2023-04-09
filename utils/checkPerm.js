@@ -16,7 +16,7 @@ async function checkGBD(uId) {
   else {
     const [findStaff] = check.filter((e) => e.discordId === uId);
     if (!findStaff) check = false;
-    if (
+    else if (
       findStaff.level === 'c' ||
       findStaff.level === 'e' ||
       findStaff.level === 's'
