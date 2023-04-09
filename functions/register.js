@@ -19,7 +19,7 @@ module.exports = async function register(interaction) {
   const newB = await createB(bsnsName, ceoId, channelId);
   if (newB)
     await interaction.reply(
-      `<@${ceoId}> 사장님, 사업체 등록이 완료되었습니다!\n사업체 이름 : \`${newB.newB.name}\`\n사업체 채널 : <#${newB.newB.channelId}>`
+      `<@${ceoId}> 사장님, 사업체 등록이 완료되었습니다!\n사업체 이름 : \`${newB.newB.name}\`\n사업체 채널 : <#${newB.newB.channelId}>\n\n\`/근벅단 직원 ${newB.newB.name}\``
     );
   else await interaction.reply(`사업체 생성에 실패했습니다!`);
 };
