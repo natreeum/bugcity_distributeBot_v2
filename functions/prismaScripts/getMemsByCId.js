@@ -6,7 +6,7 @@ module.exports = async function (cId) {
       where: { channelId: cId },
     });
     const mems = await prisma.users.findMany({
-      where: { businessName: bName },
+      where: { businessName: bName.name },
     });
     return mems;
   } catch (e) {
