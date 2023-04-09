@@ -39,6 +39,18 @@ async function checkPerm(type, uId, bName) {
       checkAdmin(uId) || (await checkGBD(uId)) || filteredMem.level === 'c'
     );
   }
+  if (type === 'exe') {
+    const mems = await getMems(bName);
+    if (mems.length === 0) return 2;
+    let [filteredMem] = mems.filter((e) => e.discordId === uId);
+    if (!filteredMem) filteredMem = { level: 'uauthorized' };
+    return (
+      checkAdmin(uId) ||
+      (await checkGBD(uId)) ||
+      filteredMem.level === 'c' ||
+      filteredMem.level === 'e'
+    );
+  }
 }
 
 async function noPerm(i) {
