@@ -1,25 +1,9 @@
 const getBs = require('../functions/prismaScripts/getAllBs');
 const getMems = require('./prismaScripts/getMems');
 const wageType = require('../utils/wageType');
-const { maxWage, memberCntDividence } = require('../utils/wageVal');
+const { memberCntDividence } = require('../utils/wageVal');
 const { checkPerm, noPerm } = require('../utils/checkPerm');
-
-function paidWageCheck(paidRes, uId, wage) {
-  if (!paidRes[uId]) {
-    paidRes[uId] = wage;
-    return wage;
-  }
-  if (paidRes[uId] + wage > maxWage) {
-    const calced = maxWage - paidRes[uId];
-    let res = 0;
-    if (calced >= 0) res = calced;
-    paidRes[uId] += res;
-    return res;
-  } else {
-    paidRes[uId] += wage;
-    return wage;
-  }
-}
+const paidWageCheck = require('../utils/paidWageCheck');
 
 async function dist(type, mems, paidRes) {
   let cMessage = '**사장**\n';
