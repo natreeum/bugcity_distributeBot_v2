@@ -4,6 +4,7 @@ const wageType = require('../utils/wageType');
 const { memberCntDividence } = require('../utils/wageVal');
 const { checkPerm, noPerm } = require('../utils/checkPerm');
 const paidWageCheck = require('../utils/paidWageCheck');
+const { getTotalWage } = require('../utils/getTotalWage');
 
 async function dist(type, mems, paidRes) {
   let cMessage = '**사장**\n';
@@ -51,6 +52,11 @@ module.exports = async function distribute(interaction) {
   // Check Permission
   if (!(await checkPerm('admin', interaction.user.id)))
     return noPerm(interaction);
+
+  // Check total wage
+  const total_wage = await getTotalWage();
+  // const BUGkshireBalance = awiat getBalance();
+  // if(BUGkshireBalance  < total_wage) return interaction.reply({content : '벅크셔 해서웨이에 잔액이 부족합니다!', ephemeral : true})
 
   const businesses = await getBs();
   const activated = businesses.filter((e) => e.activated);
