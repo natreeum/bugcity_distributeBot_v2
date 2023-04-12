@@ -1,6 +1,6 @@
-const { maxWage } = require('../utils/wageVal');
+// const { maxWage } = require('../utils/wageVal');
 
-module.exports = function paidWageCheck(paidRes, uId, wage) {
+module.exports = function paidWageCheck(paidRes, uId, wage, maxWage) {
   if (!paidRes[uId]) {
     paidRes[uId] = wage;
     return wage;

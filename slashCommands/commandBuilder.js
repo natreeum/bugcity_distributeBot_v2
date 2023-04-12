@@ -115,7 +115,15 @@ const commandBuilder = new SlashCommandBuilder()
       )
   )
   .addSubcommand((subcommand) =>
-    subcommand.setName('분배').setDescription('주급을 분배합니다.(관리자 전용)')
+    subcommand
+      .setName('분배')
+      .setDescription('주급을 분배합니다.(관리자 전용)')
+      .addIntegerOption((o) =>
+        o
+          .setName('주급상한선')
+          .setDescription('주급 상한선을 설정하여 분배합니다.')
+          .setRequired(true)
+      )
   )
   .addSubcommand((subcommand) =>
     subcommand

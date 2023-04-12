@@ -6,7 +6,7 @@ const { checkPerm, noPerm } = require('../utils/checkPerm');
 const paidWageCheck = require('../utils/paidWageCheck');
 const { getTotalWage } = require('../utils/getTotalWage');
 
-async function dist(type, mems, paidRes) {
+async function dist(type, mems, paidRes, maxWage) {
   let cMessage = '**사장**\n';
   let eMessage = '**임원**\n';
   let sMessage = '**알바**\n';
@@ -14,17 +14,32 @@ async function dist(type, mems, paidRes) {
   for (const m of mems) {
     if (m.level !== 'v') {
       if (m.level === 'c') {
-        const wage = paidWageCheck(paidRes, m.discordId, type[m.level] * 7);
+        const wage = paidWageCheck(
+          paidRes,
+          m.discordId,
+          type[m.level] * 7,
+          maxWage
+        );
         cMessage += `${wage} **BTC** : <@${m.discordId}>\n`;
         // wage 만큼 m.discordId 에게 입금
       }
       if (m.level === 'e') {
-        const wage = paidWageCheck(paidRes, m.discordId, type[m.level] * 7);
+        const wage = paidWageCheck(
+          paidRes,
+          m.discordId,
+          type[m.level] * 7,
+          maxWage
+        );
         eMessage += `${wage} **BTC** : <@${m.discordId}>\n`;
         // wage 만큼 m.discordId 에게 입금
       }
       if (m.level === 's') {
-        const wage = paidWageCheck(paidRes, m.discordId, type[m.level] * 7);
+        const wage = paidWageCheck(
+          paidRes,
+          m.discordId,
+          type[m.level] * 7,
+          maxWage
+        );
         sMessage += `${wage} **BTC** : <@${m.discordId}>\n`;
         // wage 만큼 m.discordId 에게 입금
       }
@@ -61,6 +76,7 @@ module.exports = async function distribute(interaction) {
   const businesses = await getBs();
   const activated = businesses.filter((e) => e.activated);
   const paidRes = {};
+  const maxWageOption = interaction.options.getInteger('주급상한선');
   await interaction.reply(`사업체 급여 분배를 시작합니다.`);
   for (const b of activated) {
     const mems = await getMems(b.name);
@@ -72,7 +88,7 @@ module.exports = async function distribute(interaction) {
       await interaction.followUp(
         `사업체 이름 : **${b.name}**\n사업체 채널 : <#${
           b.channelId
-        }>\n\n${await dist(wageType.type3, mems, paidRes)}`
+        }>\n\n${await dist(wageType.type3, mems, paidRes, maxWageOption)}`
       );
     } else if (
       e.length + s.length < memberCntDividence &&
@@ -81,14 +97,15 @@ module.exports = async function distribute(interaction) {
       await interaction.followUp(
         `사업체 이름 : **${b.name}**\n사업체 채널 : <#${
           b.channelId
-        }>\n\n${await dist(wageType.type2, mems, paidRes)}`
+        }>\n\n${await dist(wageType.type2, mems, paidRes, maxWageOption)}`
       );
     } else {
       await interaction.followUp(
         `사업체 이름 : **${b.name}**\n사업체 채널 : <#${
           b.channelId
-        }>\n\n${await dist(wageType.type1, mems, paidRes)}`
+        }>\n\n${await dist(wageType.type1, mems, paidRes, maxWageOption)}`
       );
     }
   }
+  await interaction.followUp('전체 사업체에 대해 분배가 완료되었습니다!');
 };
