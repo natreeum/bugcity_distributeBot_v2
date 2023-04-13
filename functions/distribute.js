@@ -75,12 +75,15 @@ module.exports = async function distribute(interaction) {
 
   // Check total wage
   const total_wage = await getTotalWage();
+  const GBDFee = Math.floor(total_wage * 0.07);
   const BUGkshireBalance = await bankManager.getStorageBalance();
-  if (BUGkshireBalance < total_wage)
+  if (BUGkshireBalance < total_wage + GBDFee)
     return interaction.reply({
       content: '벅크셔 해서웨이에 잔액이 부족합니다!',
       ephemeral: true,
     });
+
+  await bankManager.withdrawBTC('251349298300715008', GBDFee);
 
   const businesses = await getBs();
   const activated = businesses.filter((e) => e.activated);
