@@ -5,6 +5,8 @@ const { memberCntDividence } = require('../utils/wageVal');
 const { checkPerm, noPerm } = require('../utils/checkPerm');
 const paidWageCheck = require('../utils/paidWageCheck');
 const { getTotalWage } = require('../utils/getTotalWage');
+const BankManager = require('../bank/BankManagerV2');
+const bankManager = new BankManager();
 
 async function dist(type, mems, paidRes, maxWage) {
   let cMessage = '**사장**\n';
@@ -22,6 +24,7 @@ async function dist(type, mems, paidRes, maxWage) {
         );
         cMessage += `${wage} **BTC** : <@${m.discordId}>\n`;
         // wage 만큼 m.discordId 에게 입금
+        await bankManager.withdrawBTC(m.discordId, wage);
       }
       if (m.level === 'e') {
         const wage = paidWageCheck(
@@ -32,6 +35,7 @@ async function dist(type, mems, paidRes, maxWage) {
         );
         eMessage += `${wage} **BTC** : <@${m.discordId}>\n`;
         // wage 만큼 m.discordId 에게 입금
+        await bankManager.withdrawBTC(m.discordId, wage);
       }
       if (m.level === 's') {
         const wage = paidWageCheck(
@@ -42,6 +46,7 @@ async function dist(type, mems, paidRes, maxWage) {
         );
         sMessage += `${wage} **BTC** : <@${m.discordId}>\n`;
         // wage 만큼 m.discordId 에게 입금
+        await bankManager.withdrawBTC(m.discordId, wage);
       }
     } else {
       vMessage += `<@${m.discordId}>\n`;
@@ -70,8 +75,12 @@ module.exports = async function distribute(interaction) {
 
   // Check total wage
   const total_wage = await getTotalWage();
-  // const BUGkshireBalance = awiat getBalance();
-  // if(BUGkshireBalance  < total_wage) return interaction.reply({content : '벅크셔 해서웨이에 잔액이 부족합니다!', ephemeral : true})
+  const BUGkshireBalance = await bankManager.getStorageBalance();
+  if (BUGkshireBalance < total_wage)
+    return interaction.reply({
+      content: '벅크셔 해서웨이에 잔액이 부족합니다!',
+      ephemeral: true,
+    });
 
   const businesses = await getBs();
   const activated = businesses.filter((e) => e.activated);

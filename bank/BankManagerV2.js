@@ -73,7 +73,23 @@ class BankManager {
       return;
     }
   }
-  async getBalances() {}
+  async getStorageBalance() {
+    try {
+      const storageBalance = await axios.get(
+        `${api_v2}/v2/storages/${storage}`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Auth-Token': bugcity,
+          },
+        }
+      );
+      return storageBalance.data.point.current;
+    } catch (e) {
+      console.log(e);
+      return null;
+    }
+  }
 }
 
 module.exports = BankManager;
