@@ -35,7 +35,7 @@ class BankManager {
     try {
       const withdrawRes = await axios.post(
         `${api_v2}/v2/storages/${storage}/withdraw`,
-        { userId, point: amount, memo: 'Deposit to BUGkshireHathaway' },
+        { userId, point: amount, memo: 'Withdraw to BUGkshireHathaway' },
         {
           headers: {
             accept: 'application/json',
