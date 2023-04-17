@@ -25,7 +25,8 @@ class BankManager {
         throw new Error('failed');
       }
     } catch (e) {
-      console.error(e);
+      // console.error(e);
+      console.log(`[DEPOSIT FAILED] <@${userId}> - ${amount} BTC`);
       return await log(`[DEPOSIT FAILED] <@${userId}> - ${amount} BTC`);
     }
   }
@@ -51,7 +52,8 @@ class BankManager {
         throw new Error('failed');
       }
     } catch (e) {
-      console.error(e);
+      // console.error(e);
+      console.log(`[WITHDRAW FAILED] <@${userId}> - ${amount} BTC`);
       return await log(`[WITHDRAW FAILED] <@${userId}> - ${amount} BTC`);
     }
   }
@@ -70,7 +72,7 @@ class BankManager {
       return btcBalance.data;
     } catch (e) {
       console.error(e);
-      return;
+      return null;
     }
   }
   async getStorageBalance() {
