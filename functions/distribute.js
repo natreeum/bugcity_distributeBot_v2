@@ -22,9 +22,11 @@ async function dist(type, mems, paidRes, maxWage) {
           type[m.level] * 7,
           maxWage
         );
-        cMessage += `${wage} **BTC** : <@${m.discordId}>\n`;
         // wage 만큼 m.discordId 에게 입금
-        await bankManager.withdrawBTC(m.discordId, wage);
+        const distRes = await bankManager.withdrawBTC(m.discordId, wage);
+        if (distRes) cMessage += `${wage} **BTC** : <@${m.discordId}>\n`;
+        else
+          cMessage += `<@${m.discordId}>형, ${wage} **BTC** 분배 실패! <@251349298300715008>에게 문의해주세요!\n`;
       }
       if (m.level === 'e') {
         const wage = paidWageCheck(
@@ -33,9 +35,11 @@ async function dist(type, mems, paidRes, maxWage) {
           type[m.level] * 7,
           maxWage
         );
-        eMessage += `${wage} **BTC** : <@${m.discordId}>\n`;
         // wage 만큼 m.discordId 에게 입금
-        await bankManager.withdrawBTC(m.discordId, wage);
+        const distRes = await bankManager.withdrawBTC(m.discordId, wage);
+        if (distRes) eMessage += `${wage} **BTC** : <@${m.discordId}>\n`;
+        else
+          eMessage += `<@${m.discordId}>형, ${wage} **BTC** 분배 실패! <@251349298300715008>에게 문의해주세요!\n`;
       }
       if (m.level === 's') {
         const wage = paidWageCheck(
@@ -44,9 +48,11 @@ async function dist(type, mems, paidRes, maxWage) {
           type[m.level] * 7,
           maxWage
         );
-        sMessage += `${wage} **BTC** : <@${m.discordId}>\n`;
         // wage 만큼 m.discordId 에게 입금
-        await bankManager.withdrawBTC(m.discordId, wage);
+        const distRes = await bankManager.withdrawBTC(m.discordId, wage);
+        if (distRes) sMessage += `${wage} **BTC** : <@${m.discordId}>\n`;
+        else
+          sMessage += `<@${m.discordId}>형, ${wage} **BTC** 분배 실패! <@251349298300715008>에게 문의해주세요!\n`;
       }
     } else {
       vMessage += `<@${m.discordId}>\n`;

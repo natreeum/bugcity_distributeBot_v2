@@ -27,7 +27,8 @@ class BankManager {
     } catch (e) {
       console.error(e);
       console.log(`[DEPOSIT FAILED] <@${userId}> - ${amount} BTC`);
-      return await log(`[DEPOSIT FAILED] <@${userId}> - ${amount} BTC`);
+      await log(`[DEPOSIT FAILED] <@${userId}> - ${amount} BTC`);
+      return null;
     }
   }
   async withdrawBTC(userId, amount) {
@@ -54,7 +55,8 @@ class BankManager {
     } catch (e) {
       console.error(e);
       console.log(`[WITHDRAW FAILED] <@${userId}> - ${amount} BTC`);
-      return await log(`[WITHDRAW FAILED] <@${userId}> - ${amount} BTC`);
+      await log(`[WITHDRAW FAILED] <@${userId}> - ${amount} BTC`);
+      return null;
     }
   }
   async getBalance(userId) {
