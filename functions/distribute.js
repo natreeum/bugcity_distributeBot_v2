@@ -81,7 +81,7 @@ module.exports = async function distribute(interaction) {
 
   // Check total wage
   const total_wage = await getTotalWage();
-  console.log(`Total Wage : ${getTotalWage}`);
+  console.log(`Total Wage : ${total_wage}`);
 
   const GBDFee = Math.floor(total_wage * 0.07);
 
