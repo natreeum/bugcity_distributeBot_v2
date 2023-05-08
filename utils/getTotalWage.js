@@ -24,6 +24,7 @@ module.exports = {
       }
       console.log(type);
       for (const m of mems) {
+        console.log(m.level);
         const wage = paidWageCheck(
           paidRes,
           m.discordId,
