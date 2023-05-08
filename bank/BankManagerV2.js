@@ -5,9 +5,11 @@ const { log } = require('../utils/webhook');
 class BankManager {
   async depositBTC(userId, amount) {
     console.log(`Deposit [${userId}] [${amount}]`);
+    return true;
   }
   async withdrawBTC(userId, amount) {
     console.log(`Withdraw [${userId}] [${amount}]`);
+    return true;
   }
   async getBalance(userId) {
     if (!userId) return;

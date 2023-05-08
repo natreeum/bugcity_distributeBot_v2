@@ -81,8 +81,13 @@ module.exports = async function distribute(interaction) {
 
   // Check total wage
   const total_wage = await getTotalWage();
+  console.log(`Total Wage : ${getTotalWage}`);
+
   const GBDFee = Math.floor(total_wage * 0.07);
+
   const BUGkshireBalance = await bankManager.getStorageBalance();
+  console.log(`BUGkshireBalance : ${BUGkshireBalance}`);
+
   if (BUGkshireBalance < total_wage + GBDFee)
     return interaction.reply({
       content: `벅크셔 해서웨이에 잔액이 부족합니다... 아마 직원명단 변동이 있었나봐요..\n${
