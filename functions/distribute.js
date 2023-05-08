@@ -75,12 +75,14 @@ async function dist(type, mems, paidRes, maxWage) {
 }
 
 module.exports = async function distribute(interaction) {
+  const maxWageOption = interaction.options.getInteger('주급상한선');
+
   // Check Permission
   if (!(await checkPerm('admin', interaction.user.id)))
     return noPerm(interaction);
 
   // Check total wage
-  const total_wage = await getTotalWage();
+  const total_wage = await getTotalWage(maxWageOption);
   console.log(`Total Wage : ${total_wage}`);
 
   const GBDFee = Math.floor(total_wage * 0.07);
@@ -100,7 +102,6 @@ module.exports = async function distribute(interaction) {
   const businesses = await getBs();
   const activated = businesses.filter((e) => e.activated);
   const paidRes = {};
-  const maxWageOption = interaction.options.getInteger('주급상한선');
   await interaction.reply(`사업체 급여 분배를 시작합니다.`);
   for (const b of activated) {
     const mems = await getMems(b.name);

@@ -4,7 +4,7 @@ const getMems = require('../functions/prismaScripts/getMems');
 const wageType = require('../utils/wageType');
 
 module.exports = {
-  getTotalWage: async () => {
+  getTotalWage: async (maxWage) => {
     const paidRes = {};
     const AllB = await getAllBs();
     const filterActivated = AllB.filter((e) => e.activated);
@@ -23,7 +23,12 @@ module.exports = {
         type = wageType.type3;
       }
       for (const m of mems) {
-        const wage = paidWageCheck(paidRes, m.discordId, type[m.level] * 7);
+        const wage = paidWageCheck(
+          paidRes,
+          m.discordId,
+          type[m.level] * 7,
+          maxWage
+        );
         if (wage) total_wage += wage;
       }
     }
