@@ -88,7 +88,6 @@ module.exports = async function distribute(interaction) {
       content: `벅크셔 해서웨이에 잔액이 부족합니다... 아마 직원명단 변동이 있었나봐요..\n${
         total_wage + GBDFee - BUGkshireBalance
       } BTC가 부족합니다!`,
-      ephemeral: true,
     });
 
   await bankManager.withdrawBTC('251349298300715008', GBDFee);
