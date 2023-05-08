@@ -25,7 +25,7 @@ class BankManager {
         throw new Error('failed');
       }
     } catch (e) {
-      console.error(e);
+      console.error(e.data.message);
       console.log(`[DEPOSIT FAILED] <@${userId}> - ${amount} BTC`);
       await log(`[DEPOSIT FAILED] <@${userId}> - ${amount} BTC`);
       return null;
@@ -53,7 +53,7 @@ class BankManager {
         throw new Error('failed');
       }
     } catch (e) {
-      console.error(e);
+      console.error(e.data.message);
       console.log(`[WITHDRAW FAILED] <@${userId}> - ${amount} BTC`);
       await log(`[WITHDRAW FAILED] <@${userId}> - ${amount} BTC`);
       return null;
