@@ -24,9 +24,7 @@ module.exports = {
       }
       for (const m of mems) {
         const wage = paidWageCheck(paidRes, m.discordId, type[m.level] * 7);
-        console.log(`${total_wage} ${wage}`);
-        if (!wage) console.log('nnnn');
-        total_wage += wage;
+        if (wage) total_wage += wage;
       }
     }
     return total_wage;
