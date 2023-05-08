@@ -29,6 +29,7 @@ module.exports = {
           type[m.level] * 7,
           maxWage
         );
+        console.log(wage);
         if (wage) total_wage += wage;
       }
     }
