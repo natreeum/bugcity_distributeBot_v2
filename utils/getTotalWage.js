@@ -24,14 +24,12 @@ module.exports = {
       }
       console.log(type);
       for (const m of mems) {
-        console.log(m.level);
         const wage = paidWageCheck(
           paidRes,
           m.discordId,
           type[m.level] * 7,
           maxWage
         );
-        console.log(wage);
         if (wage) total_wage += wage;
       }
     }
