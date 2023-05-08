@@ -22,7 +22,6 @@ module.exports = {
       } else {
         type = wageType.type3;
       }
-      console.log(type);
       for (const m of mems) {
         const wage = paidWageCheck(
           paidRes,
