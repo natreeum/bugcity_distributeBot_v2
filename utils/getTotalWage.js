@@ -24,7 +24,7 @@ module.exports = {
       }
       for (const m of mems) {
         const wage = paidWageCheck(paidRes, m.discordId, type[m.level] * 7);
-        if (wage === NaN) console.log(b);
+        console.log(typeof wage);
         total_wage += wage;
       }
     }
