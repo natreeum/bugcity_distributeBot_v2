@@ -4,12 +4,60 @@ const { log } = require('../utils/webhook');
 
 class BankManager {
   async depositBTC(userId, amount) {
-    console.log(`Deposit [${userId}] [${amount}]`);
-    return true;
+    if (!userId || !amount) return;
+    try {
+      const depositRes = await axios.post(
+        `${api_v2}/v2/storages/${storage}/deposit`,
+        { userId, point: amount, memo: 'Deposit to BUGkshireHathaway' },
+        {
+          headers: {
+            accept: 'application/json',
+            'Content-Type': 'application/json',
+            'X-Auth-Token': bugcity,
+          },
+        }
+      );
+      if (depositRes) {
+        await log(`[DEPOSIT SUCCESS] <@${userId}> - ${amount} BTC`);
+        console.log(`[DEPOSIT SUCCESS] ${userId} - ${amount} BTC`);
+        return depositRes;
+      } else {
+        throw new Error('failed');
+      }
+    } catch (e) {
+      console.error(e.data.message);
+      console.log(`[DEPOSIT FAILED] <@${userId}> - ${amount} BTC`);
+      await log(`[DEPOSIT FAILED] <@${userId}> - ${amount} BTC`);
+      return null;
+    }
   }
   async withdrawBTC(userId, amount) {
-    console.log(`Withdraw [${userId}] [${amount}]`);
-    return true;
+    if (!userId || !amount) return;
+    try {
+      const withdrawRes = await axios.post(
+        `${api_v2}/v2/storages/${storage}/withdraw`,
+        { userId, point: amount, memo: 'Withdraw to BUGkshireHathaway' },
+        {
+          headers: {
+            accept: 'application/json',
+            'Content-Type': 'application/json',
+            'X-Auth-Token': bugcity,
+          },
+        }
+      );
+      if (withdrawRes) {
+        await log(`[WITHDRAW SUCCESS] <@${userId}> - ${amount} BTC`);
+        console.log(`[WITHDRAW SUCCESS] ${userId} - ${amount} BTC`);
+        return withdrawRes;
+      } else {
+        throw new Error('failed');
+      }
+    } catch (e) {
+      console.error(e.data.message);
+      console.log(`[WITHDRAW FAILED] <@${userId}> - ${amount} BTC`);
+      await log(`[WITHDRAW FAILED] <@${userId}> - ${amount} BTC`);
+      return null;
+    }
   }
   async getBalance(userId) {
     if (!userId) return;
