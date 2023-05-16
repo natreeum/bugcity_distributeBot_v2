@@ -1,5 +1,5 @@
 const activateB = require('../functions/prismaScripts/activateB');
-const { checkPerm, noPerm } = require('../utils/checkPerm');
+const { checkPerm, noPerm, noB } = require('../utils/checkPerm');
 
 module.exports = async function deactivate(interaction) {
   const bName = interaction.options.getString('사업체이름');
