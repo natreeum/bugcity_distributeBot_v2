@@ -5,7 +5,7 @@ module.exports = async function update(interaction) {
   const oldBName = interaction.options.getString('사업체이름');
 
   // Permission Check
-  const checkPermRes = await checkPerm('ceo', interaction.user.id, oldBName);
+  const checkPermRes = await checkPerm('ceo', interaction, oldBName);
   if (!checkPermRes) return noPerm(interaction);
   if (checkPermRes === 2) return noB(interaction);
 

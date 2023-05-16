@@ -1,8 +1,11 @@
 const getMems = require('../functions/prismaScripts/getMems');
-const { ADMIN, GBD_STAFF } = require('./wageVal');
+const { ADMIN, GBD_STAFF, OPERATOR_ROLE_ID } = require('./wageVal');
 
-function checkAdmin(uId) {
-  return ADMIN.includes(uId);
+function checkAdmin(interaction) {
+  return (
+    ADMIN.includes(interaction.user.id) ||
+    interaction.member.roles.has(OPERATOR_ROLE_ID)
+  );
 }
 async function checkGBDExist() {
   const GBD = await getMems('근로벅지공단');
@@ -27,16 +30,19 @@ async function checkGBD(uId) {
   return check;
 }
 
-async function checkPerm(type, uId, bName) {
-  if (type === 'admin') return checkAdmin(uId);
-  if (type === 'gbd') return checkAdmin(uId) || checkGBD(uId);
+async function checkPerm(type, interaction, bName) {
+  const uId = interaction.user.id;
+  if (type === 'admin') return checkAdmin(interaction);
+  if (type === 'gbd') return checkAdmin(interaction) || checkGBD(uId);
   if (type === 'ceo') {
     const mems = await getMems(bName);
     if (mems.length === 0) return 2;
     let [filteredMem] = mems.filter((e) => e.discordId === uId);
     if (!filteredMem) filteredMem = { level: 'uauthorized' };
     return (
-      checkAdmin(uId) || (await checkGBD(uId)) || filteredMem.level === 'c'
+      checkAdmin(interaction) ||
+      (await checkGBD(uId)) ||
+      filteredMem.level === 'c'
     );
   }
   if (type === 'exe') {

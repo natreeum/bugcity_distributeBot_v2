@@ -9,7 +9,7 @@ module.exports = async function member(interaction) {
   const staffId = interaction.options.getUser('직원').id;
   const level = interaction.options.getString('직급');
 
-  const checkPermRes = await checkPerm('exe', interaction.user.id, bName);
+  const checkPermRes = await checkPerm('exe', interaction, bName);
   if (!checkPermRes) return noPerm(interaction);
   if (checkPermRes === 2) return noB(interaction);
 

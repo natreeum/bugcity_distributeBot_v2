@@ -3,8 +3,8 @@ const { checkPerm, noPerm } = require('../utils/checkPerm');
 
 module.exports = async function activate(interaction) {
   // Permission check
-  if (!(await checkPerm('admin', interaction.user.id)))
-    return noPerm(interaction);
+  if (!(await checkPerm('admin', interaction))) return noPerm(interaction);
+
   const bName = interaction.options.getString('사업체이름');
   const activateRes = await activateB(bName, 'activate');
   if (activateRes)

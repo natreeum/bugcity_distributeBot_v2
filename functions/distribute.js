@@ -78,8 +78,7 @@ module.exports = async function distribute(interaction) {
   const maxWageOption = interaction.options.getInteger('주급상한선');
 
   // Check Permission
-  if (!(await checkPerm('admin', interaction.user.id)))
-    return noPerm(interaction);
+  if (!(await checkPerm('admin', interaction))) return noPerm(interaction);
 
   // Check total wage
   const total_wage = await getTotalWage(maxWageOption);

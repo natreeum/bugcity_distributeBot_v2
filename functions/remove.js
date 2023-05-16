@@ -6,7 +6,7 @@ module.exports = async function remove(interaction) {
   const bName = interaction.options.getString('사업체이름');
 
   // Permission Check
-  const checkPermRes = await checkPerm('ceo', interaction.user.id, bName);
+  const checkPermRes = await checkPerm('ceo', interaction, bName);
   if (!checkPermRes) return noPerm(interaction);
   if (checkPermRes === 2) return noB(interaction);
 

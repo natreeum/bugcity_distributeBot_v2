@@ -3,8 +3,7 @@ const getB = require('../functions/prismaScripts/getBusiness');
 const { checkPerm, noPerm } = require('../utils/checkPerm');
 
 module.exports = async function register(interaction) {
-  if (!(await checkPerm('gbd', interaction.user.id)))
-    return noPerm(interaction);
+  if (!(await checkPerm('gbd', interaction))) return noPerm(interaction);
 
   const bsnsName = interaction.options.getString('사업체이름');
   const ceoId = interaction.options.getUser('사장님').id;
