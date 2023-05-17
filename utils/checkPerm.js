@@ -4,7 +4,7 @@ const { ADMIN, GBD_STAFF, OPERATOR_ROLE_ID } = require('./wageVal');
 function checkAdmin(interaction) {
   return (
     ADMIN.includes(interaction.user.id) ||
-    interaction.member.roles.has(OPERATOR_ROLE_ID)
+    interaction.member.roles.cache.has(OPERATOR_ROLE_ID)
   );
 }
 async function checkGBDExist() {
