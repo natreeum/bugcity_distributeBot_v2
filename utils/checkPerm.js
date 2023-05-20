@@ -1,5 +1,5 @@
-const getMems = require('../functions/prismaScripts/getMems');
-const { ADMIN, GBD_STAFF, OPERATOR_ROLE_ID } = require('./wageVal');
+const getMems = require("../functions/prismaScripts/getMems");
+const { ADMIN, GBD_STAFF, OPERATOR_ROLE_ID } = require("./wageVal");
 
 function checkAdmin(interaction) {
   return (
@@ -8,7 +8,7 @@ function checkAdmin(interaction) {
   );
 }
 async function checkGBDExist() {
-  const GBD = await getMems('근로벅지공단');
+  const GBD = await getMems("근로벅지공단");
   if (GBD.length === 0) return false;
   else return GBD;
 }
@@ -20,9 +20,9 @@ async function checkGBD(uId) {
     const [findStaff] = check.filter((e) => e.discordId === uId);
     if (!findStaff) check = false;
     else if (
-      findStaff.level === 'c' ||
-      findStaff.level === 'e' ||
-      findStaff.level === 's'
+      findStaff.level === "c" ||
+      findStaff.level === "e" ||
+      findStaff.level === "s"
     )
       check = true;
     else check = false;
@@ -32,29 +32,29 @@ async function checkGBD(uId) {
 
 async function checkPerm(type, interaction, bName) {
   const uId = interaction.user.id;
-  if (type === 'admin') return checkAdmin(interaction);
-  if (type === 'gbd') return checkAdmin(interaction) || checkGBD(uId);
-  if (type === 'ceo') {
+  if (type === "admin") return checkAdmin(interaction);
+  if (type === "gbd") return checkAdmin(interaction) || checkGBD(uId);
+  if (type === "ceo") {
     const mems = await getMems(bName);
     if (mems.length === 0) return 2;
     let [filteredMem] = mems.filter((e) => e.discordId === uId);
-    if (!filteredMem) filteredMem = { level: 'uauthorized' };
+    if (!filteredMem) filteredMem = { level: "uauthorized" };
     return (
       checkAdmin(interaction) ||
       (await checkGBD(uId)) ||
-      filteredMem.level === 'c'
+      filteredMem.level === "c"
     );
   }
-  if (type === 'exe') {
+  if (type === "exe") {
     const mems = await getMems(bName);
     if (mems.length === 0) return 2;
     let [filteredMem] = mems.filter((e) => e.discordId === uId);
-    if (!filteredMem) filteredMem = { level: 'uauthorized' };
+    if (!filteredMem) filteredMem = { level: "uauthorized" };
     return (
-      checkAdmin(uId) ||
+      checkAdmin(interaction) ||
       (await checkGBD(uId)) ||
-      filteredMem.level === 'c' ||
-      filteredMem.level === 'e'
+      filteredMem.level === "c" ||
+      filteredMem.level === "e"
     );
   }
 }
